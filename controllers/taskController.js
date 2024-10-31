@@ -38,16 +38,21 @@ const createTask = async (req, res, next) => {
 
         //     })
         // }
+     
         
-        if(selectedDate!== ""){
-            if (new Date(selectedDate) < Date.now()) {
+        if (selectedDate !== " ") {
+            const [day, month, year] = selectedDate.split("-");
+            const formattedDate = `${year}-${month}-${day}`;
+            const selected = new Date(formattedDate).setHours(0, 0, 0, 0);
+            // Convert both dates to "YYYY-MM-DD" format for a date-only comparison
+            const today = new Date().setHours(0, 0, 0, 0); // Set time to midnight for today
+           
+        
+            if (selected < today) {
                 return res.status(400).json({
-    
                     success: false,
-                    message: "due-date must be ahead of current time",
-    
-    
-                })
+                    message: "due-date must be ahead of the current date",
+                });
             }
         }
        
@@ -504,6 +509,21 @@ const editTask=async(req,res,next)=>
 
 
             })
+        }
+        if (dueDate !== " ") {
+            const [day, month, year] = dueDate.split("-");
+            const formattedDate = `${year}-${month}-${day}`;
+            const selected = new Date(formattedDate).setHours(0, 0, 0, 0);
+            // Convert both dates to "YYYY-MM-DD" format for a date-only comparison
+            const today = new Date().setHours(0, 0, 0, 0); // Set time to midnight for today
+           
+        
+            if (selected < today) {
+                return res.status(400).json({
+                    success: false,
+                    message: "due-date must be ahead of the current date",
+                });
+            }
         }
         //const task=await Task.find(taskId)
 
