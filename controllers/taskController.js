@@ -629,7 +629,29 @@ const getSingleTaskForEdit=async(req,res,next)=>
     }
 }
 
+const getSingleTask=async(req,res,next)=>
+    {
+        try{
+    
+            const taskId=req.params.taskId
+    
+            const singleTask=await Task.findById(taskId)
+    
+            return res.status(200).json({
+    
+                success: true,
+               
+                singleTask
+            })
+    
+        }catch(error){
+            next(error)
+            console.log(error)
+        }
+    }
+    
+
 
 module.exports = { createTask, getAllMyTasksThisWeek, updateChecklistStatus,deleteTask,updateTaskStatus,analyticsTask ,editTask,
-    assignTaskOnAddPeople,checkDueDate,getAllMyTasksToday,getAllMyTasksForThisMonth,getSingleTaskForEdit,
+    assignTaskOnAddPeople,checkDueDate,getAllMyTasksToday,getAllMyTasksForThisMonth,getSingleTaskForEdit,getSingleTask,
     sharedTaskView,getAllUsersToAssign}

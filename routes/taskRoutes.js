@@ -1,7 +1,8 @@
 const express =require("express");
 const { createTask,  updateChecklistStatus, deleteTask, 
     updateTaskStatus, analyticsTask, sharedTaskView, getAllUsersToAssign, assignTaskOnAddPeople, checkDueDate, getAllMyTasksToday, getAllMyTasksForThisMonth, getAllMyTasksThisWeek, 
-     getSingleTaskForEdit, editTask} = require("../controllers/taskController");
+     getSingleTaskForEdit, editTask,
+     getSingleTask} = require("../controllers/taskController");
 const isAuthenticated = require("../middlewares/auth");
 
 
@@ -29,6 +30,8 @@ router.get("/allMyTasksThisMonth/:month/:year",isAuthenticated,getAllMyTasksForT
 
 
 router.get("/singleTaskForEdit/:taskId",isAuthenticated,getSingleTaskForEdit)
+
+router.get("/singleTask/:taskId",getSingleTask)
 router.patch("/editTask/:taskId",isAuthenticated,editTask)
 // router.put("/likeOrDislike/:id", isAuthenticated,likeOrDislikeStory)
 // router.get("/storiesByCategory/:category",getStoriesByCategory)
